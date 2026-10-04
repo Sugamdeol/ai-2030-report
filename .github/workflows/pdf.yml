@@ -1,0 +1,68 @@
+name: Generate PDF Report
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'ai-2030-report.md'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-pdf:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install pandoc and LaTeX
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc texlive-xetex texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra fonts-dejavu-core
+
+      - name: Convert Markdown to PDF
+        run: |
+          pandoc ai-2030-report.md \
+            --pdf-engine=xelatex \
+            --template=eisvogel.tex \
+            --toc \
+            --toc-depth=3 \
+            --number-sections \
+            -V geometry:margin=2.5cm \
+            -V fontsize=11pt \
+            -V linestretch=1.2 \
+            -V fontfamily=dejavu \
+            -V colorlinks=true \
+            -V linkcolor=accentcolor \
+            -V urlcolor=accentcolor \
+            -V toccolor=titlecolor \
+            -o ai-2030-report.pdf
+
+      - name: Upload PDF as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-2030-report-pdf
+          path: ai-2030-report.pdf
+          retention-days: 30
+
+      - name: Create Release
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ai-2030-report.pdf
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit PDF to repository
+        if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add ai-2030-report.pdf
+          git diff --staged --quiet || git commit -m "Update PDF report [skip ci]"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

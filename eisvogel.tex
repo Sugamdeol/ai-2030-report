@@ -1,0 +1,117 @@
+%%
+%% This is a modified version of the eisvogel template
+%% Original: https://github.com/Wandmalfarbe/pandoc-latex-template
+%%
+\ProvidesPackage{eisvogel}
+
+\RequirePackage{fontspec}
+\RequirePackage{unicode-math}
+\RequirePackage{geometry}
+\RequirePackage{fancyhdr}
+\RequirePackage{booktabs}
+\RequirePackage{longtable}
+\RequirePackage{array}
+\RequirePackage{multirow}
+\RequirePackage{wrapfig}
+\RequirePackage{float}
+\RequirePackage{colortbl}
+\RequirePackage{pdflscape}
+\RequirePackage{tabu}
+\RequirePackage{threeparttable}
+\RequirePackage{threeparttablex}
+\RequirePackage[normalem]{ulem}
+\RequirePackage{makecell}
+\RequirePackage{xcolor}
+\RequirePackage{hyperref}
+\RequirePackage{graphicx}
+\RequirePackage{setspace}
+\RequirePackage{titlesec}
+\RequirePackage{titletoc}
+\RequirePackage{tocloft}
+\RequirePackage{sectsty}
+\RequirePackage{enumitem}
+\RequirePackage{parskip}
+
+% Page geometry
+\geometry{
+  top=2.5cm,
+  bottom=2.5cm,
+  left=2.5cm,
+  right=2.5cm,
+  headheight=15pt,
+  footskip=1.5cm
+}
+
+% Fonts
+\setmainfont{DejaVu Serif}[
+  BoldFont=DejaVu Serif Bold,
+  ItalicFont=DejaVu Serif Italic,
+  BoldItalicFont=DejaVu Serif Bold Italic
+]
+\setsansfont{DejaVu Sans}[
+  BoldFont=DejaVu Sans Bold,
+  ItalicFont=DejaVu Sans Oblique,
+  BoldItalicFont=DejaVu Sans Bold Oblique
+]
+\setmonofont{DejaVu Sans Mono}[
+  BoldFont=DejaVu Sans Mono Bold,
+  ItalicFont=DejaVu Sans Mono Oblique,
+  BoldItalicFont=DejaVu Sans Mono Bold Oblique
+]
+
+% Colors
+\definecolor{titlecolor}{HTML}{191712}
+\definecolor{subtitlecolor}{HTML}{6f6a5e}
+\definecolor{accentcolor}{HTML}{b3261e}
+\definecolor{linkcolor}{HTML}{b3261e}
+\definecolor{headercolor}{HTML}{191712}
+\definecolor{footercolor}{HTML}{6f6a5e}
+\definecolor{tableheader}{HTML}{f6f3ec}
+\definecolor{tablerow}{HTML}{fffdf8}
+\definecolor{tableborder}{HTML}{e3ddcf}
+
+% Hyperref
+\hypersetup{
+  colorlinks=true,
+  linkcolor=linkcolor,
+  filecolor=linkcolor,
+  urlcolor=linkcolor,
+  citecolor=linkcolor,
+  pdfborder={0 0 0}
+}
+
+% Headers and footers
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{headercolor}\leftmark}
+\fancyhead[R]{\small\color{headercolor}\thepage}
+\fancyfoot[C]{\small\color{footercolor}AI in 2030 Report}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{accentcolor}\leaders\hrule height \headrulewidth\hfill}}
+
+% Title formatting
+\titleformat{\section}{\Large\bfseries\color{titlecolor}}{}{0pt}{}
+\titleformat{\subsection}{\large\bfseries\color{titlecolor}}{}{0pt}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{titlecolor}}{}{0pt}{}
+
+% Table formatting
+\renewcommand{\arraystretch}{1.3}
+\setlength{\tabcolsep}{8pt}
+
+% Code blocks
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\},fontsize=\small,formatcom=\color{titlecolor}}
+\definecolor{codebg}{HTML}{f6f3ec}
+\setlength{\fboxsep}{8pt}
+
+% List spacing
+\setlist[itemize]{leftmargin=*,topsep=4pt,itemsep=2pt}
+\setlist[enumerate]{leftmargin=*,topsep=4pt,itemsep=2pt}
+
+% Paragraph spacing
+\setlength{\parskip}{6pt}
+\setlength{\parindent}{0pt}
+
+% Table of contents
+\setcounter{tocdepth}{3}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
