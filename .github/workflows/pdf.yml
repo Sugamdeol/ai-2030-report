@@ -35,9 +35,9 @@ jobs:
             -V linestretch=1.2 \
             -V fontfamily=dejavu \
             -V colorlinks=true \
-            -V linkcolor=accentcolor \
-            -V urlcolor=accentcolor \
-            -V toccolor=titlecolor \
+            -V linkcolor="#b3261e" \
+            -V urlcolor="#b3261e" \
+            -V toccolor="#191712" \
             -o ai-2030-report.pdf
 
       - name: Upload PDF as artifact
